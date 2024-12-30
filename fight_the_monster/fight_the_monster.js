@@ -1,7 +1,7 @@
 
 /*VICTORY CONDITION 
 - reach 'X' XP 
-- HP >= 1
+- hp >= 1
 */
 
 
@@ -22,37 +22,41 @@ let creature = [
     'Skeleton',
     'Demon'
 ];
+let playerXp = 100;
+let playerHp = 100;
 let level=Math.floor(Math.random()*10+1);
-let HP = level * 7;
+let hp = level * 7;
 let strength = level * 0.65;
-let xp = 100;
+//let xp = 100;
 
 //MAJOR FUNCTIONS 
 function combat(){
-    if(player.HP===0){//defeat condition
+    if(player.hp===0){//defeat condition
         return 'You were defeated!';
-    }else if (monster.HP===0){//Victory condition
+    }else if (monster.hp===0){//victory condition
         return 'You defeated the monster!'
     };
     //Combat itself...
     //Turn-based
-    //damage dealt-->modify both monster and player HP
+    //damage dealt-->modify both monster and player hp
     //XP dropped
 };
-function playerHeal(){
-
-    //heal using XP points
-    //HP cap?
+function playerHeal(n){ // Not working right now
+    
+    playerXp = playerXp - n;
+    playerHp = playerHp + n;
+    return player;
+    //Can't heal over the cap
 };
 function playerXP() {
-    //
+    
 };
 function monsterLevelStats(level, statType){
     let value = level * Math.floor((Math.random()*level)+statType);
     return value
 };
-function playerStrength(xp){
-    let value = Math.floor((Math.random()*30+(xp/5)));
+function playerStrength(playerXp){
+    let value = Math.floor((Math.random()*30+(playerXp/5)));
     return value;
 };
 
@@ -78,17 +82,19 @@ function randomIndex_ArrObj(obj){
 
 //OBJECTS
 let player = {
-    'XP': xp, // Gained from Combat or spent on healing
-    'HP': 100, // increased per every X amount of XP
-    'strength': playerStrength(xp), // increased per every X amount of XP
+    'xp': playerXp, // Gained from Combat or spent on healing
+    'hp': playerHp, // increased by X after defeating a monster
+    'strength': playerStrength(playerXp), // increased per every X amount of XP
 };
 let monster = {
     'name': nameGenerator(element, creature),
     'level': level, //directly tied to player XP/level
-    'HP': 0,//monsterLevelStats(level, HP),
+    'hp': 0,//monsterLevelStats(level, hp),
     'strength': monsterLevelStats(level, strength),
 };
 
 
-console.log(combat());
+console.log(playerHeal(20));
+
+
 
