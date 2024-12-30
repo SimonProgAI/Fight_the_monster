@@ -1,5 +1,9 @@
 
-//VICTORY CONDITION --> reach 'X' XP 
+/*VICTORY CONDITION 
+- reach 'X' XP 
+- HP >= 1
+*/
+
 
 //VARIABLES
 let element = [
@@ -19,26 +23,37 @@ let creature = [
     'Demon'
 ];
 let level=Math.floor(Math.random()*10+1);
-let health = level * 7;
-let strength = level * 0.85;
-let block = level * 0.85;
+let HP = level * 7;
+let strength = level * 0.65;
+let xp = 100;
 
 //MAJOR FUNCTIONS 
 function combat(){
-    //victory condition
-    //defeat condition
-    //damage dealt-->modify both monster and player health
+    if(player.HP===0){//defeat condition
+        return 'You were defeated!';
+    }else if (monster.HP===0){//Victory condition
+        return 'You defeated the monster!'
+    };
+    //Combat itself...
+    //Turn-based
+    //damage dealt-->modify both monster and player HP
     //XP dropped
 };
-function heal(){
+function playerHeal(){
+
     //heal using XP points
+    //HP cap?
 };
-function XP() {
+function playerXP() {
     //
 };
-function levelStats(level, statType){
+function monsterLevelStats(level, statType){
     let value = level * Math.floor((Math.random()*level)+statType);
     return value
+};
+function playerStrength(xp){
+    let value = Math.floor((Math.random()*30+(xp/5)));
+    return value;
 };
 
 //MINOR FUNCTIONS
@@ -62,20 +77,18 @@ function randomIndex_ArrObj(obj){
 
 
 //OBJECTS
-let playerStats = {
-    'name': 'John Doe', //from an input in the DOM
-    'XP': 1, // Gained from Combat or spent on healing
-    'health': levelStats(level, health), // increased per every X amount of XP
-    'strength': levelStats(level, strength), // increased per every X amount of XP
-    'block': levelStats(level, block) // increased per every X amount of XP
+let player = {
+    'XP': xp, // Gained from Combat or spent on healing
+    'HP': 100, // increased per every X amount of XP
+    'strength': playerStrength(xp), // increased per every X amount of XP
 };
 let monster = {
     'name': nameGenerator(element, creature),
     'level': level, //directly tied to player XP/level
-    'health': levelStats(level, health),
-    'strength': levelStats(level, strength),
-    'block': levelStats(level, block)
+    'HP': 0,//monsterLevelStats(level, HP),
+    'strength': monsterLevelStats(level, strength),
 };
 
-console.log(monster);
+
+console.log(combat());
 
