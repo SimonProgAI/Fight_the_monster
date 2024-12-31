@@ -22,25 +22,61 @@ let creature = [
     'Skeleton',
     'Demon'
 ];
-let playerXp = 100;
 let playerHp = 100;
-let level=Math.floor(Math.random()*10+1);
-let hp = level * 7;
-let strength = level * 0.65;
+let playerXp = 100;
+let monsterLevel=Math.floor(Math.random()*10+1);
+let monsterHp = monsterLevel * 7;
+let monsterStrength = monsterLevel * 0.65;
 //let xp = 100;
 
+//OBJECTS
+let player = {
+    'xp': playerXp, // Gained from Combat or spent on healing
+    'hp': playerHp, // increased by X after defeating a monster
+    'strength': attack(playerXp), // increased per every X amount of XP
+};
+let monster = {
+    'name': nameGenerator(element, creature),
+    'level': monsterLevel, //directly tied to player XP/level
+    'hp': monsterHp,//monsterLevelStats(level, hp),
+    'strength': monsterLevelStats(monsterLevel, monsterStrength),
+};
+
 //MAJOR FUNCTIONS 
-function combat(){
+let playerInput = prompt(`
+    You are attacked by a ${monster.name}! Attack (a) or Heal (h)?
+`);
+let combatActive = true;  
+
+while (combatActive){
+    playerInput;
+    if (playerInput === 'a'){
+        //attack
+    }else if (playerInput === 'h'){
+        //heal
+    }else {
+        return "Please enter 'a' to attack or 'h' to heal";
+    };
+
+    if (monster.hp<=0){//victory condition
+        combatActive = false;
+        return 'You defeated the monster!';
+    };
+
+    let monsterAttack = atttack(100);
+
     if(player.hp===0){//defeat condition
         return 'You were defeated!';
-    }else if (monster.hp===0){//victory condition
-        return 'You defeated the monster!'
-    };
-    //Combat itself...
-    //Turn-based
-    //damage dealt-->modify both monster and player hp
-    //XP dropped
+        break;
+
+    }
 };
+//Combat itself...
+//Turn-based
+//damage dealt-->modify both monster and player hp
+//XP dropped
+
+
 function playerHeal(n){ // Not working right now
     
     playerXp = playerXp - n;
@@ -48,16 +84,17 @@ function playerHeal(n){ // Not working right now
     return player;
     //Can't heal over the cap
 };
+
 function playerXP() {
     
 };
-function monsterLevelStats(level, statType){
-    let value = level * Math.floor((Math.random()*level)+statType);
+function monsterLevelStats(monsterLevel, statType){
+    let value = monsterLevel * Math.floor((Math.random()*monsterLevel)+statType);
     return value
 };
-function playerStrength(playerXp){
+function attack(playerXp){
     let value = Math.floor((Math.random()*30+(playerXp/5)));
-    return value;
+    return monsterHp - value;
 };
 
 //MINOR FUNCTIONS
@@ -80,21 +117,11 @@ function randomIndex_ArrObj(obj){
 };
 
 
-//OBJECTS
-let player = {
-    'xp': playerXp, // Gained from Combat or spent on healing
-    'hp': playerHp, // increased by X after defeating a monster
-    'strength': playerStrength(playerXp), // increased per every X amount of XP
-};
-let monster = {
-    'name': nameGenerator(element, creature),
-    'level': level, //directly tied to player XP/level
-    'hp': 0,//monsterLevelStats(level, hp),
-    'strength': monsterLevelStats(level, strength),
-};
 
 
-console.log(playerHeal(20));
+
+console.log(attack(100));
+console.log(monster);
 
 
 
