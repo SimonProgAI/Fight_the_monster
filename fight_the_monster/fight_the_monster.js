@@ -87,7 +87,7 @@ function monsterTurn(){
 function combatStat(){
     console.log(`Combat stats: ${monster.name}'s hp: ${monster.hp}, ${player.name}'s hp: ${player.hp}`);
     alert(`${monster.name}'s hp: ${monster.hp}, ${player.name}'s hp: ${player.hp}`);
-    }
+};
 function attack(fighter){
     console.log('attack() called');
     if(fighter==1){//player
