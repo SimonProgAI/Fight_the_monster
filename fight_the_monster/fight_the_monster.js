@@ -1,118 +1,73 @@
-
-/*Gameplay Loop 
-1
---Monster.Name attacks you!
---playerHealth displayed
---Monster health displayed
---a or h? playerInput
-
-[:
-2
---You just ${playerInput}
---Updated player and monster stats
-
-3
---Monster just attacked you.
---Updated player and monster stats
-:]
-
-4
---Monster or Player defeated
-
-Working right now:
-attack  (but does not modify the monster object)
-playerHeal 
-nameGenerator
-
-*/
-
-
 //VARIABLES
-
 //--Monster Names--
 let element = [
     'Shadow', 
     'Fire',
-    'Water',
+    'Moon',
     'Wind',
-    'Earth'
+    'Crypt'
 ];
 let creature = [
     'Vampire',
     'Ghost',
     'Zombie',
-    'Apparition',
+    'Spectre',
     'Spider',
     'Skeleton',
     'Demon'
 ];
 //--Player & NPC Variables--
-let playerHp = 100;
+let playerHp = 30;
 let monsterLevel=Math.floor(Math.random()*10+1);
 let monsterHp = monsterLevel * 7;
 let monsterStrength = Math.ceil(monsterLevel * 2.3);
-
+let combatActive=true;
 //OBJECTS
-
 let player = {
     name: 'John the Valiant',
-    hp: playerHp,
-
-}
-
+    hp: playerHp
+};
 let monster = {
     name: nameGenerator(element, creature),
     hp: monsterHp,
     level: monsterLevel,
     strength: monsterStrength
 };
-//--Function related variables
-let playerInput = console.log(`
-    A level ${monster.level} ${monster.name} attacks you! Attack (a) or Heal (h)?
-`);
-let combatActive = true;
-
-
-
-//MAJOR FUNCTIONS 
-
-/* 
+//GAMEPLAY FUNCTIONS
 function combat(){
-    while (combatActive){
-        playerInput
-        if (playerInput === 'a'){
-            //attack
-        }else if (playerInput === 'h'){
-            //heal
-        }else {
-            return "Please enter 'a' to attack or 'h' to heal";
+    while (combatActive) {
+        let playerInput = prompt(`
+            The level ${monster.level} ${monster.name} attacks you! Attack (a) or Heal (h)?
+        `);
+        let statUpdate = alert(`${monster.name} hp: ${monster.hp}, ${player.name} hp: ${player.hp}`);
+        let monsterAttack = player.hp -= monster.strength;
+        //
+        /*1*/playerInput;
+        if(playerInput!=='a'&&playerInput!=='h'){
+            alert('please enter a valid input');
+        }else if (playerInput === 'a'){
+            monster.hp -= attack();
+        }else if (playerInput ==='h'){
+            playerHeal();
         };
-
-        if (monster.hp<=0){//victory condition
+        if(monster.hp<1){
             combatActive = false;
-            return 'You defeated the monster!';
+            alert(`${player.name} defeated the ${monster.name}!`);
         };
+        statUpdate;
 
-        let monsterAttack = atttack(100);
-
-        if(player.hp===0){//defeat condition
-            return 'You were defeated!';
-            break;
-
-        }
+        /*2*/monsterAttack;
+        statUpdate;
+        if(player.hp<1){
+            combatActive = false;
+            alert(`${monster.name} defeated the ${player.name}!`);
+        };        
     };
 };
-*/
+combat();
 function playerHeal(){
-    player.hp += Math.ceil(monsterStrength*0.8);
-    return player.hp;
+    player.hp += 10;//Math.floor(monsterStrength*2);
 };
-/*
-function monsterLevelStats(monsterLevel, statType){
-    let value = monsterLevel * Math.floor((Math.random()*monsterLevel)+statType);
-    return value;
-};
-*/
 function attack(){
     //If input from player:
     let value = Math.floor((Math.random()*15+monsterLevel));
@@ -120,7 +75,6 @@ function attack(){
     //If input from monster:
     //player.hp -= monster.strength
 };
-
 //MINOR FUNCTIONS
 function nameGenerator(first, last){
     return randomIndex_ArrObj(first) + ' ' + randomIndex_ArrObj(last);
@@ -139,20 +93,10 @@ function randomIndex_ArrObj(obj){
         return 'Input must be an array or object.';
     };
 };
-
-
-
-
-console.log(monster);
-monster.hp -= attack();
-console.log(monster);
-monster.hp -= attack();
-console.log(monster);
-playerHeal();
-console.log(player);
-playerHeal();
-console.log(player);
-
-
-
-
+//DISCARDED FUNCTIONS
+/*
+function monsterLevelStats(monsterLevel, statType){
+    let value = monsterLevel * Math.floor((Math.random()*monsterLevel)+statType);
+    return value;
+};
+*/
