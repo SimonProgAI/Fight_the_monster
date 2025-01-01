@@ -16,7 +16,7 @@ let creature = [
     'Skeleton',
     'Demon'
 ];
-//--Player & NPC Variables--
+//--Player, NPC & Combat Variables--
 let playerHp = 30;
 let monsterLevel=Math.floor(Math.random()*10+1);
 let monsterHp = monsterLevel * 7;
@@ -33,7 +33,7 @@ let monster = {
     level: monsterLevel,
     strength: monsterStrength
 };
-//GAMEPLAY FUNCTIONS
+//FUNCTIONS
 function combat(){
     while (combatActive) {
         let playerInput = prompt(`
@@ -55,7 +55,7 @@ function combat(){
             alert(`${player.name} defeated the ${monster.name}!`);
         };
         statUpdate;
-
+        
         /*2*/monsterAttack;
         statUpdate;
         if(player.hp<1){
@@ -75,7 +75,6 @@ function attack(){
     //If input from monster:
     //player.hp -= monster.strength
 };
-//MINOR FUNCTIONS
 function nameGenerator(first, last){
     return randomIndex_ArrObj(first) + ' ' + randomIndex_ArrObj(last);
 };
