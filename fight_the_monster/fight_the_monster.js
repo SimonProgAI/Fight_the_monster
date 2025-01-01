@@ -1,27 +1,27 @@
 //VARIABLES
-//--Monster Names--
-    let element = [
-        'Shadow', 
-        'Fire',
-        'Moon',
-        'Storm',
-        'Crypt'
-    ];
-    let creature = [
-        'Vampire',
-        'Ghost',
-        'Zombie',
-        'Spectre',
-        'Spider',
-        'Skeleton',
-        'Demon'
-    ];
+//--Monster Names Arrays--
+let element = [
+    'Shadow', 
+    'Fire',
+    'Moon',
+    'Storm',
+    'Crypt'
+];
+let creature = [
+    'Vampire',
+    'Ghost',
+    'Zombie',
+    'Spectre',
+    'Spider',
+    'Skeleton',
+    'Demon'
+];
 //--Player, NPC & Combat Variables--
-    let playerHp = 30;
-    let monsterLevel = Math.floor(Math.random()*10+1);
-    let monsterHp = monsterLevel * 7;
-    let monsterStrength = Math.ceil(monsterLevel * 2.3);
-    let combatActive = true;
+let playerHp = 30;
+let monsterLevel = Math.floor(Math.random()*10+1);
+let monsterHp = monsterLevel * 7;
+let monsterStrength = Math.ceil(monsterLevel * 2.3);
+let combatActive = true;
 //OBJECTS
 let player = {
     name: 'John the Valiant',
@@ -125,4 +125,5 @@ function randomIndex_ArrObj(obj){
         return 'Input must be an array or object.';
     };
 };
+//FUNCTION CALL
 combat();
