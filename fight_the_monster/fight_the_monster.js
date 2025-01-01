@@ -4,7 +4,7 @@ let element = [
     'Shadow', 
     'Fire',
     'Moon',
-    'Wind',
+    'Storm',
     'Crypt'
 ];
 let creature = [
@@ -18,10 +18,10 @@ let creature = [
 ];
 //--Player, NPC & Combat Variables--
 let playerHp = 30;
-let monsterLevel=Math.floor(Math.random()*10+1);
+let monsterLevel = Math.floor(Math.random()*10+1);
 let monsterHp = monsterLevel * 7;
 let monsterStrength = Math.ceil(monsterLevel * 2.3);
-let combatActive=true;
+let combatActive = true;
 //OBJECTS
 let player = {
     name: 'John the Valiant',
@@ -29,7 +29,7 @@ let player = {
 };
 let monster = {
     name: nameGenerator(element, creature),
-    hp: monsterHp,
+    hp: Math.max(0, monsterHp),
     level: monsterLevel,
     strength: monsterStrength
 };
@@ -37,26 +37,28 @@ let monster = {
 function combat(){
     while (combatActive) {
         let playerInput = prompt(`
-            The level ${monster.level} ${monster.name} attacks you! Attack (a) or Heal (h)?
+            A level ${monster.level} ${monster.name} attacks ${player.name}! Attack (a) the ${monster.name} back or heal (h) ${player.name}?
         `);
-        let statUpdate = alert(`${monster.name} hp: ${monster.hp}, ${player.name} hp: ${player.hp}`);
-        let monsterAttack = player.hp -= monster.strength;
         //
-        /*1*/playerInput;
-        if(playerInput!=='a'&&playerInput!=='h'){
+        
+        /*1*/
+        playerInput;
+        if(playerInput !=='a' && playerInput!=='h'){
             alert('please enter a valid input');
         }else if (playerInput === 'a'){
-            monster.hp -= attack();
+            attack(1);
         }else if (playerInput ==='h'){
             playerHeal();
         };
+        let statUpdate = alert(`${monster.name}'s hp: ${monster.hp}, ${player.name}'s hp: ${player.hp}`);
+        statUpdate;
         if(monster.hp<1){
             combatActive = false;
             alert(`${player.name} defeated the ${monster.name}!`);
         };
-        statUpdate;
-        
-        /*2*/monsterAttack;
+
+        /*2*/
+        attack(2);
         statUpdate;
         if(player.hp<1){
             combatActive = false;
@@ -64,16 +66,18 @@ function combat(){
         };        
     };
 };
-combat();
 function playerHeal(){
-    player.hp += 10;//Math.floor(monsterStrength*2);
+    player.hp += Math.floor(monsterStrength*2);
 };
-function attack(){
-    //If input from player:
-    let value = Math.floor((Math.random()*15+monsterLevel));
-    return value;
-    //If input from monster:
-    //player.hp -= monster.strength
+function attack(fighter){
+    if(fighter==1){//player      
+        let damage = Math.floor((Math.random()*15+monsterLevel));
+        monster.hp -= damage;
+        monster.hp = Math.max(0, monster.hp);
+    }else if(fighter==2){//monster
+        player.hp -= monster.strength;
+        player.hp = Math.max(0, player.hp);
+    };
 };
 function nameGenerator(first, last){
     return randomIndex_ArrObj(first) + ' ' + randomIndex_ArrObj(last);
@@ -92,10 +96,5 @@ function randomIndex_ArrObj(obj){
         return 'Input must be an array or object.';
     };
 };
-//DISCARDED FUNCTIONS
-/*
-function monsterLevelStats(monsterLevel, statType){
-    let value = monsterLevel * Math.floor((Math.random()*monsterLevel)+statType);
-    return value;
-};
-*/
+
+combat();
