@@ -33,41 +33,49 @@ let monster = {
     level: monsterLevel,
     strength: monsterStrength
 };
-//FUNCTIONS
+//COMBAT FUNCTION
 function combat(){
     while (combatActive) {
-        let playerInput = prompt(`
-            A level ${monster.level} ${monster.name} attacks ${player.name}! Attack (a) the ${monster.name} back or heal (h) ${player.name}?
-        `);
-        //
-        
-        /*1*/
-        playerInput;
-        if(playerInput !=='a' && playerInput!=='h'){
-            alert('please enter a valid input');
-        }else if (playerInput === 'a'){
-            attack(1);
-        }else if (playerInput ==='h'){
-            playerHeal();
-        };
-        let statUpdate = alert(`${monster.name}'s hp: ${monster.hp}, ${player.name}'s hp: ${player.hp}`);
-        statUpdate;
-        if(monster.hp<1){
-            combatActive = false;
-            alert(`${player.name} defeated the ${monster.name}!`);
-        };
-
-        /*2*/
-        attack(2);
-        statUpdate;
-        if(player.hp<1){
-            combatActive = false;
-            alert(`${monster.name} defeated the ${player.name}!`);
-        };        
+        playerTurn();
+        monsterTurn();                
     };
 };
-function playerHeal(){
-    player.hp += Math.floor(monsterStrength*2);
+//SUPPORTING FUNCTIONS
+function playerTurn(){    
+    let playerInput = prompt(`
+        A level ${monster.level} ${monster.name} attacks ${player.name}! Attack (a) the ${monster.name} back or heal (h) ${player.name}?
+    `);
+    playerInput;
+    if(playerInput !=='a' && playerInput!=='h'){
+        alert('please enter a valid input');
+    }else if (playerInput === 'a'){
+        attack(1);
+        alert(`${player.name} attacks!`)
+        combatStat();
+    }else if (playerInput ==='h'){
+        playerHeal();
+        alert(`${player.name} heals his wounds!`);
+        combatStat();
+    };
+    if(monster.hp<1){
+        combatActive = false;
+        alert(`${player.name} defeated the ${monster.name}!`);
+    };
+};
+function monsterTurn(){
+    if (combatActive){
+        alert(`${monster.name} fights back!`);
+        attack(2);
+        combatStat();
+    };
+    if(player.hp<1){
+        combatActive = false;
+        combatStat();
+        alert(`${monster.name} defeated the ${player.name}!`);
+    };
+};
+function combatStat(){
+    alert(`${monster.name}'s hp: ${monster.hp}, ${player.name}'s hp: ${player.hp}`);
 };
 function attack(fighter){
     if(fighter==1){//player      
@@ -79,6 +87,10 @@ function attack(fighter){
         player.hp = Math.max(0, player.hp);
     };
 };
+function playerHeal(){
+    player.hp += Math.floor(monsterStrength*2);
+};
+//OBJECT RELATED FUNCTIONSa
 function nameGenerator(first, last){
     return randomIndex_ArrObj(first) + ' ' + randomIndex_ArrObj(last);
 };
@@ -96,5 +108,4 @@ function randomIndex_ArrObj(obj){
         return 'Input must be an array or object.';
     };
 };
-
 combat();
