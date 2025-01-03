@@ -19,11 +19,14 @@ class Person{
         this.dob = dob;
         this.age = this.calculateAge();
         this.generation = this.calculateGeneration();
-        //this.address = new Map() 
+        this.addresses = new Map(); 
     }
-    //registerAddress(number, street){
-        //this.address.add()
-   // }
+    addAddresses(date, address){
+        this.addresses.set(date.toDateString(), address);
+    }
+    deleteAddresses(date){
+        this.addresses.delete(date);
+    }
     calculateAge(){
         let today = new Date();
         let age = today.getFullYear() - this.dob.getFullYear();
@@ -71,24 +74,32 @@ class Employee extends Person {
         this.id = id;
         this.skills = new Set();
     }
-
-    addSkills(skill){
-        this.skills.add(skill);
-    }    
+    add_or_deleteSkills(add_or_delete, skill){
+        switch(add_or_delete){
+            case 'add':
+                this.skills.add(skill);
+                break;
+            case 'delete':
+                this.skills.delete(skill);
+                break;
+        };   
+    }
+    
 
     greeting(){
         return `
             ${super.greeting()}
             I am a ${this.job}, employee id: ${this.id}.   
-        `
+        `;
     }
 
 }
 const PERSON1 = new Employee('John', 'Wick', new Date(2099, 0, 28), 'teacher', 123456);
-PERSON1.addSkills('JavaScript');
-PERSON1.addSkills('French');
-PERSON1.addSkills('Cooking');
-PERSON1.addSkills('JavaScript');
+PERSON1.add_or_deleteSkills('add','JavaScript');
+PERSON1.add_or_deleteSkills('add','French');
+PERSON1.add_or_deleteSkills('add','Cooking');
+PERSON1.add_or_deleteSkills('delete','Cooking');
+PERSON1.addAddresses((new Date(1995,8,20)), {address: 2130, street: 'Forest'});
 console.log(PERSON1.greeting());
 console.log(PERSON1);
 
