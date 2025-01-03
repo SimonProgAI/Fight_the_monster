@@ -1,58 +1,96 @@
 class Person{
     constructor(firstName, lastName, dob/* new Date(yyyy, mm, dd)*/){
-        let fullName = this.firstName + this.lastName
-        if(typeof fullName!== 'string' || fullName.length<1 || fullName.length>50){
-            console.log('Please enter between 1 and 50 letters');
-            return 'Please enter between 1 and 50 letters';
-        };
-        if (dob.constructor !== Date||isNaN(dob)){
-            return 'Please use yyyy, mm, dd'
-        };  
+        
+        if(typeof firstName!='string'||firstName.length<1||firstName.length>50){
+            console.log('Please enter a valid first name');
+            return;
+        }    
+        if(typeof lastName!='string'||lastName.length<1||lastName.length>50){
+            console.log('Please enter a valid last name');
+            return;
+        }
+        if (dob.constructor != Date||isNaN(dob)){
+            console.log('Please use yyyy, mm, dd');
+            return;
+        }
+        
         this.firstName = firstName;
         this.lastName = lastName;
         this.dob = dob;
         this.age = this.calculateAge();
-        this.generation = this.calculateGeneration(); 
+        this.generation = this.calculateGeneration();
+        //this.address = new Map() 
     }
+    //registerAddress(number, street){
+        //this.address.add()
+   // }
     calculateAge(){
         let today = new Date();
         let age = today.getFullYear() - this.dob.getFullYear();
         let monthDiff = today.getMonth()- this.dob.getMonth();
         if(monthDiff < 0 || monthDiff===0 && today.getDate() < this.dob.getDate()){
             age--;
-        }
+        };
         return age;
     }
     calculateGeneration(){
-        let dobYear = this.dob.getFullYear(); 
-        if (dobYear>=2025){
-            return 'Generation Beta';
-        }else if(dobYear<=2024 && dobYear>=2013){
-            return 'Generation Alpha';
-        }else if(dobYear<=2012 && dobYear>=1995){
-            return 'Generation Z';
-        }else if (dobYear<=1994 && dobYear>=1980){
-            return 'Millenial';
-        }else if (dobYear<=1979 && dobYear>=1965){
-            return 'Generation X';
-        }else if (dobYear<=1964 && dobYear>=1946){
-            return 'Baby Boomer';
-        }else if (dobYear<=1945 && dobYear>=1925){
-            return 'Silent Generation';
-        }else if (dobYear<=1901 && dobYear>=1924){
-            return 'Greatest Generation';
-        }else {
-            return 'Immortal Highlander';
+        let generations = [
+            { start: -100000, end: 1899, name: 'the Immortal Highlanders Generation'},
+            { start: 1900, end: 1924, name: 'the Greatest Generation'},
+            { start: 1925, end: 1945, name: 'the Silent Generation'},
+            { start: 1946, end: 1964, name: 'the Baby Boomers'},
+            { start: 1965, end: 1979, name: 'Generation X'},
+            { start: 1980, end: 1994, name: 'the Millenial Generation'},
+            { start: 1995, end: 2012, name: 'Generation Z'},
+            { start: 2013, end: 2024, name: 'Generation Alpha'},
+            { start: 2025, end: 2039, name: 'Generation Beta'},
+            { start: 2040, end: Infinity, name: 'the Space Colonization Generation'}
+        ]
+
+        for(let generation of generations){
+            let dobYear = this.dob.getFullYear();
+            if (generation.start<=dobYear&&generation.end>=dobYear){
+                return generation.name;
+            }; 
         };
+        
     }
     greeting(){
         return `
-          Hello, I am ${this.firstName} ${this.lastName}. 
-          I was born on ${this.dob} and I am ${this.age}. 
-          My generation is ${this.generation}.`;
+            Hello, I am ${this.firstName} ${this.lastName}. 
+            I was born on ${this.dob.toDateString()} and I am ${this.age}. 
+            My generation is ${this.generation}.
+        `;
     }
 };
 
-const PERSON1 = new Person(1234, 1233, new Date(1478, 0, 28));
-console.log(PERSON1.greeting());
+class Employee extends Person {
+    constructor(firstName, lastName, dob, job, id){
+        super(firstName, lastName, dob);
+        this.job = job;
+        this.id = id;
+        this.skills = new Set();
+    }
 
+    addSkills(skill){
+        this.skills.add(skill);
+    }    
+
+    greeting(){
+        return `
+            ${super.greeting()}
+            I am a ${this.job}, employee id: ${this.id}.   
+        `
+    }
+
+}
+const PERSON1 = new Employee('John', 'Wick', new Date(2099, 0, 28), 'teacher', 123456);
+PERSON1.addSkills('JavaScript');
+PERSON1.addSkills('French');
+PERSON1.addSkills('Cooking');
+PERSON1.addSkills('JavaScript');
+console.log(PERSON1.greeting());
+console.log(PERSON1);
+
+
+ 
