@@ -1,6 +1,5 @@
 class Person{
     constructor(firstName, lastName, dob/* new Date(yyyy, mm, dd)*/){
-        
         if(typeof firstName!='string'||firstName.length<1||firstName.length>50){
             console.log('Please enter a valid first name');
             return;
@@ -13,7 +12,6 @@ class Person{
             console.log('Please use yyyy, mm, dd');
             return;
         }
-        
         this.firstName = firstName;
         this.lastName = lastName;
         this.dob = dob;
@@ -66,7 +64,6 @@ class Person{
         `;
     }
 };
-
 class Employee extends Person {
     constructor(firstName, lastName, dob, job, id){
         super(firstName, lastName, dob);
@@ -74,7 +71,7 @@ class Employee extends Person {
         this.id = id;
         this.skills = new Set();
     }
-    add_or_deleteSkills(add_or_delete, skill){
+    manageSkills(add_or_delete, skill){
         switch(add_or_delete){
             case 'add':
                 this.skills.add(skill);
@@ -82,23 +79,22 @@ class Employee extends Person {
             case 'delete':
                 this.skills.delete(skill);
                 break;
+            default:
+                return 'please enter "add" or "delete"';
         };   
     }
-    
-
     greeting(){
         return `
             ${super.greeting()}
             I am a ${this.job}, employee id: ${this.id}.   
         `;
     }
-
 }
-const PERSON1 = new Employee('John', 'Wick', new Date(2099, 0, 28), 'teacher', 123456);
-PERSON1.add_or_deleteSkills('add','JavaScript');
-PERSON1.add_or_deleteSkills('add','French');
-PERSON1.add_or_deleteSkills('add','Cooking');
-PERSON1.add_or_deleteSkills('delete','Cooking');
+const PERSON1 = new Employee('John', 'Wick', new Date(1987, 0, 28), 'teacher', 123456);
+PERSON1.manageSkills('add','JavaScript');
+PERSON1.manageSkills('add','French');
+PERSON1.manageSkills('add','Cooking');
+PERSON1.manageSkills('delete','Cooking');
 PERSON1.addAddresses((new Date(1995,8,20)), {address: 2130, street: 'Forest'});
 console.log(PERSON1.greeting());
 console.log(PERSON1);
