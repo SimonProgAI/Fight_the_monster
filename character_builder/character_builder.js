@@ -1,5 +1,5 @@
 class Person{
-    constructor(firstName, lastName, dob/* new Date(yyyy, mm, dd)*/){
+    constructor(firstName, lastName, dob){
         if(typeof firstName!='string'||firstName.length<1||firstName.length>50){
             console.log('Please enter a valid first name');
             return;
@@ -17,14 +17,14 @@ class Person{
         this.dob = dob;
         this.age = this.calculateAge();
         this.generation = this.calculateGeneration();
-        this.addresses = new Map(); 
+        //this.addresses = new Map(); 
     }
-    addAddresses(date, address){
-        this.addresses.set(date.toDateString(), address);
-    }
-    deleteAddresses(date){
-        this.addresses.delete(date);
-    }
+    //addAddresses(date, address){
+        //this.addresses.set(date.toDateString(), address);
+   //}
+    //deleteAddresses(date){
+        //this.addresses.delete(date);
+    //}
     calculateAge(){
         let today = new Date();
         let age = today.getFullYear() - this.dob.getFullYear();
@@ -59,7 +59,7 @@ class Person{
     greeting(){
         return `
             Hello, I am ${this.firstName} ${this.lastName}. 
-            I was born on ${this.dob.toDateString()} and I am ${this.age}. 
+            I was born on ${this.dob.toDateString()} and I am ${this.age} years old. 
             My generation is ${this.generation}.
         `;
     }
@@ -89,15 +89,37 @@ class Employee extends Person {
             I am a ${this.job}, employee id: ${this.id}.   
         `;
     }
-}
-const PERSON1 = new Employee('John', 'Wick', new Date(1987, 0, 28), 'teacher', 123456);
-PERSON1.manageSkills('add','JavaScript');
-PERSON1.manageSkills('add','French');
-PERSON1.manageSkills('add','Cooking');
-PERSON1.manageSkills('delete','Cooking');
-PERSON1.addAddresses((new Date(1995,8,20)), {address: 2130, street: 'Forest'});
-console.log(PERSON1.greeting());
-console.log(PERSON1);
+};
 
+function  buildCharacter() {
+    const outputArea = document.getElementById('outputArea');
+    let firstName = document.getElementById('firstName').value;
+    let lastName = document.getElementById('lastName').value;
+    let dob = document.getElementById('dob').value;
+    let dobDate = new Date(dob);
+    let job = document.getElementById('job').value;
+    let id = document.getElementById('id').value;
+    //add and deletete skills
+    let character1 = new Employee(firstName, lastName, dobDate, job, id);
+
+    let output = `${character1.firstName} ${character1.lastName} ${character1.dob} ${character1.job} ${character1.id} ${character1.greeting()}`;
+    
+    outputArea.innerText = output;
+    
+    //console.log(character1);    
+}
+document.getElementById('form').addEventListener('submit', function(event){
+    event.preventDefault();
+});
+
+
+/*const character1 = new Employee('John', 'Wick', new Date(1987, 0, 28), 'teacher', 123456);
+character1.manageSkills('add','JavaScript');
+character1.manageSkills('add','French');
+character1.manageSkills('add','Cooking');
+character1.manageSkills('delete','Cooking');
+console.log(character1.greeting());
+console.log(character1);
+*/
 
  
