@@ -1,3 +1,4 @@
+//CLASS//
 class Person{
     constructor(firstName, lastName, dob){
         if(typeof firstName!='string'||firstName.length<1||firstName.length>50){
@@ -64,6 +65,7 @@ class Person{
         `;
     }
 };
+//INHERITED CLASS//
 class Employee extends Person {
     constructor(firstName, lastName, dob, job, id){
         super(firstName, lastName, dob);
@@ -90,7 +92,7 @@ class Employee extends Person {
         `;
     }
 };
-
+//FUNCTION//
 function  buildCharacter() {
     const outputArea = document.getElementById('outputArea');
     let firstName = document.getElementById('firstName').value;
@@ -111,15 +113,14 @@ function  buildCharacter() {
 document.getElementById('form').addEventListener('submit', function(event){
     event.preventDefault();
 });
-
-
-/*const character1 = new Employee('John', 'Wick', new Date(1987, 0, 28), 'teacher', 123456);
-character1.manageSkills('add','JavaScript');
-character1.manageSkills('add','French');
-character1.manageSkills('add','Cooking');
-character1.manageSkills('delete','Cooking');
-console.log(character1.greeting());
-console.log(character1);
-*/
+//TESTING//
+    /*const character1 = new Employee('John', 'Wick', new Date(1987, 0, 28), 'teacher', 123456);
+    character1.manageSkills('add','JavaScript');
+    character1.manageSkills('add','French');
+    character1.manageSkills('add','Cooking');
+    character1.manageSkills('delete','Cooking');
+    console.log(character1.greeting());
+    console.log(character1);
+    */
 
  
